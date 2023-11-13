@@ -1,16 +1,17 @@
-import './App.css'
-import DisplaySessions from './components/DisplaySessions'
-import SaveSession from './components/SaveSession'
+import '../src/styles/App.css';
+import DisplaySessions from './components/DisplaySessions';
+import NewSession from './components/NewSession';
 
 function App() {
-
   return (
     <>
-      <h1>Hola, Mundo!!</h1>
-      <SaveSession />
-      <DisplaySessions />
+      <div className="mainContainer">
+        <h1>Hola, Mundo!!</h1>
+        <NewSession />
+        <DisplaySessions />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
