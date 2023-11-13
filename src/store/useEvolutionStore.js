@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const useEvolutionStore = create((set) => ({
   evolutions: [],
+  searchResults:[],
 
   addEvolution: (name, date, evolution) => {
     const evolutionData = {

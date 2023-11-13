@@ -4,14 +4,14 @@ import useEvolutionStore from '../store/useEvolutionStore';
 import { useState } from 'react';
 
 const SessionSearch = () => {
+  const [searchResultCount, setSearchResultCount] = useState(0);
   const [searchName, setSearchName] = useState('');
   const [searchDate, setSearchDate] = useState('');
-  const [searchResultCount, setSearchResultCount] = useState(0);
-
-  const evolutions = useEvolutionStore((state) => state.evolutions);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [showNotFoundMessage, setShowNotFoundMessage] = useState(false);
+  const { evolutions } = useEvolutionStore();
 
   const handleSearch = () => {
-    // Filtrar las evoluciones por nombre y fecha
     const filteredEvolutions = evolutions.filter((evolution) => {
       const nameMatch = evolution.name
         .toLowerCase()
@@ -20,8 +20,17 @@ const SessionSearch = () => {
       return nameMatch && dateMatch;
     });
 
-    // Actualizar el contador de resultados
     setSearchResultCount(filteredEvolutions.length);
+    useEvolutionStore.setState({ searchResults: filteredEvolutions });
+
+    setHasSearched(true);
+
+      if (searchResultCount === 0) {
+        setShowNotFoundMessage(true); //* Con esto muestro el msje de erroir si no hay resultados
+        setTimeout(() => {
+          setShowNotFoundMessage(false); //* Y acá programo que el mensaje desaparezca después de 2 segundos
+        }, 2000);
+      }
   };
 
   return (
@@ -56,12 +65,22 @@ const SessionSearch = () => {
       </Form>
 
       <span>
-        {searchResultCount ?
-          searchResultCount > 1 ?
-            <h5>Se encontraron {searchResultCount} resultados para la búsqueda</h5> :
-            <h5>Se encontró un resultado coincidente con la búsqueda.</h5> :
-          <h5 className='evolutionsNotFounded'>No se encontraron resultados. Controlar datos ingresados.</h5>
-      }
+        {hasSearched && //* Va mostrar el mensaje solo si se ha realizado una búsqueda
+          (searchResultCount ? (
+            searchResultCount > 1 ? (
+              <h5>
+                Se encontraron {searchResultCount} resultados para la búsqueda
+              </h5>
+            ) : (
+              <h5>Se encontró un resultado coincidente con la búsqueda.</h5>
+            )
+          ) : (
+            showNotFoundMessage && ( //* Acá va mostrar el mensaje solo si showNotFoundMessage es verdadero
+              <h5 className="evolutionsNotFounded">
+                No se encontraron resultados. Controlar datos ingresados.
+              </h5>
+            )
+          ))}
       </span>
     </div>
   );

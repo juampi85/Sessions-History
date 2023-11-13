@@ -1,7 +1,10 @@
-import { Table } from 'reactstrap';
 import '../styles/DisplaySessions.css';
+import { Table } from 'reactstrap';
+import useEvolutionStore from '../store/useEvolutionStore';
 
 const DisplaySessions = () => {
+  const { searchResults } = useEvolutionStore();
+
   return (
     <Table hover borderless className="table">
       <thead>
@@ -13,24 +16,14 @@ const DisplaySessions = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {searchResults.map((result) => (
+          <tr key={result.id}>
+            <td>{result.id}</td>
+            <td>{result.name}</td>
+            <td>{result.date}</td>
+            <td>{result.evolution}</td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );
