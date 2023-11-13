@@ -1,10 +1,18 @@
 import { create } from 'zustand';
+import { v4 as uuidv4 } from 'uuid';
 
 const useEvolutionStore = create((set) => ({
   evolutions: [],
 
-  addEvolution: (evolutionData) =>
-    set((state) => ({ evolutions: [...state.evolutions, evolutionData] })),
+  addEvolution: (name, date, evolution) => {
+    const evolutionData = {
+      name,
+      date,
+      evolution,
+      id: uuidv4(), //* Con esto genero un ID único para cada evolución
+    };
+    set((state) => ({ evolutions: [...state.evolutions, evolutionData] }));
+  },
 
   updateEvolution: (id, updatedData) =>
     set((state) => ({

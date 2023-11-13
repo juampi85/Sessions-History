@@ -1,0 +1,23 @@
+.mainSection{
+  display: flex;
+  justify-content: space-around;
+}
+
+.search{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.inputSearch {
+  width: 40vw;
+  background-color: #8282f1;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  height: fit-content;
+}
+
+.evolutionsNotFounded{
+  color: red;
+  backdrop-filter: blur(100%);
+}
