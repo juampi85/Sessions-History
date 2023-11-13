@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div className="mainContainer">
-        <h1>Hola, Mundo!!</h1>
+        <h1 className='mainTitle'>Evoluciones Clínicas</h1>
         <NewSession />
         <DisplaySessions />
       </div>
