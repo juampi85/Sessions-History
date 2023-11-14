@@ -11,6 +11,11 @@ const SessionSearch = () => {
   const [showNotFoundMessage, setShowNotFoundMessage] = useState(false);
   const { evolutions } = useEvolutionStore();
 
+  //* Esto es para obtener una lista de nombres únicos de los pacientes
+  const uniqueNames = Array.from(
+    new Set(evolutions.map((evolution) => evolution.name))
+  );
+
   const handleSearch = () => {
     const filteredEvolutions = evolutions.filter((evolution) => {
       const nameMatch = evolution.name
@@ -25,12 +30,12 @@ const SessionSearch = () => {
 
     setHasSearched(true);
 
-      if (searchResultCount === 0) {
-        setShowNotFoundMessage(true); //* Con esto muestro el msje de erroir si no hay resultados
-        setTimeout(() => {
-          setShowNotFoundMessage(false); //* Y acá programo que el mensaje desaparezca después de 2 segundos
-        }, 2000);
-      }
+    if (searchResultCount === 0) {
+      setShowNotFoundMessage(true); //* Con esto muestro el msje de erroir si no hay resultados
+      setTimeout(() => {
+        setShowNotFoundMessage(false); //* Y acá programo que el mensaje desaparezca después de 2 segundos
+      }, 2000);
+    }
   };
 
   return (
@@ -42,11 +47,18 @@ const SessionSearch = () => {
             <Input
               id="patient"
               name="patient"
-              placeholder="Juan Pérez..."
-              type="text"
+              // placeholder="Juan Pérez..."
+              type="select"
               value={searchName}
               onChange={(event) => setSearchName(event.target.value)}
-            />
+            >
+              <option value="">Seleccionar paciente</option>
+              {uniqueNames.map((name, index) => (
+                <option key={index} value={name}>
+                  {name}
+                </option>
+              ))}
+            </Input>
           </FormGroup>
           <FormGroup>
             <Label for="date">Buscar por fecha</Label>

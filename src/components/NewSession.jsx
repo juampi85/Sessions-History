@@ -1,16 +1,33 @@
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../styles/NewSession.css';
 import useEvolutionStore from '../store/useEvolutionStore';
+import swal from 'sweetalert';
+
 
 const NewSession = () => {
   const { evolutions, addEvolution } = useEvolutionStore(); //* Acá me traigo el estado global y las actions
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [evolution, setEvolution] = useState('');
+  const inputRef = useRef(null);
 
-  const handleAddEvolution = (name, date, evolution) => {
-    addEvolution(name, date, evolution);
+  //* Esto es para obtener una lista de nombres únicos de los pacientes
+  const uniqueNames = Array.from(
+    new Set(evolutions.map((evolution) => evolution.name))
+  );
+
+  const handleAddEvolution = () => {
+    if (name && date && evolution) {
+      addEvolution(name, date, evolution);
+      swal("GUARDADO", "...la evolución ha sido registrada correctamente", "success");
+    } else {
+      swal("ERROR", "...debe completar todos los campos", "error");
+    }
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   };
 
   useEffect(() => {
@@ -20,7 +37,6 @@ const NewSession = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Obteniendo los datos del formulario y añadiendo la evolución
     //* Acá llamo a la función para agregar la evolución y guardarla en el estado global
     handleAddEvolution(name, date, evolution);
 
@@ -28,6 +44,9 @@ const NewSession = () => {
     setName('');
     setDate('');
     setEvolution('');
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
 
   return (
@@ -39,10 +58,28 @@ const NewSession = () => {
             id="patient"
             name="patient"
             placeholder="Juan Pérez..."
-            type="text"
+            type="select"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            // onChange={(event) => setName(event.target.value)}
+            onChange={handleNameChange}
             className="nameInput"
+          >
+            <option value="">Seleccionar paciente ya cargado</option>
+            {uniqueNames.map((uniqueName, index) => (
+              <option key={index} value={uniqueName}>
+                {uniqueName}
+              </option>
+            ))}
+          </Input>
+          <Input
+            type="text"
+            placeholder="Agregar nuevo paciente..."
+            onChange={(event) => {
+              if (!uniqueNames.includes(event.target.value)) {
+                setName(event.target.value);
+              }
+            }}
+            ref={inputRef}
           />
         </FormGroup>
         <FormGroup>
