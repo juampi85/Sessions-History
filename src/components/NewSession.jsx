@@ -1,5 +1,5 @@
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/NewSession.css';
 import useEvolutionStore from '../store/useEvolutionStore';
 import swal from 'sweetalert';
@@ -10,7 +10,6 @@ const NewSession = () => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [evolution, setEvolution] = useState('');
-  const inputRef = useRef(null);
 
   //* Esto es para obtener una lista de nombres únicos de los pacientes
   const uniqueNames = Array.from(
@@ -44,9 +43,6 @@ const NewSession = () => {
     setName('');
     setDate('');
     setEvolution('');
-    if (inputRef.current) {
-      inputRef.current.value = '';
-    }
   };
 
   return (
@@ -79,7 +75,6 @@ const NewSession = () => {
                 setName(event.target.value);
               }
             }}
-            ref={inputRef}
           />
         </FormGroup>
         <FormGroup>
