@@ -9,7 +9,7 @@ const DisplaySessions = () => {
     <Table hover borderless className="table">
       <thead>
         <tr>
-          <th>ID</th>
+          {/* <th>ID</th> */}
           <th>Nombre</th>
           <th>Fecha</th>
           <th>Evolución</th>
@@ -18,7 +18,7 @@ const DisplaySessions = () => {
       <tbody>
         {searchResults.map((result) => (
           <tr key={result.id}>
-            <td>{result.id}</td>
+            {/* <td>{result.id}</td> */}
             <td>{result.name}</td>
             <td>{result.date}</td>
             <td>{result.evolution}</td>
