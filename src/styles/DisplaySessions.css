@@ -1,7 +1,16 @@
-.table{
+.table {
   margin: 0 auto;
   margin-top: 2rem;
   width: 80vw;
   background-color: #fff;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
+}
+
+.titles {
+  text-align: center;
+}
+
+.icons {
+  height: 1rem;
+  margin-right: 0.5rem;
 }

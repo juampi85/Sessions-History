@@ -54,7 +54,6 @@ const NewSession = () => {
           <Input
             id="patient"
             name="patient"
-            placeholder="Juan Pérez..."
             type="select"
             value={name}
             onChange={handleNameChange}
@@ -73,7 +72,7 @@ const NewSession = () => {
           <Input
             id="newPatient"
             name="newPatient"
-            placeholder="John Doe"
+            placeholder="Juan Pérez..."
             className="nameInput"
             type="text"
             value={newPatientName}
@@ -103,10 +102,6 @@ const NewSession = () => {
             className="date"
           />
         </FormGroup>
-
-        {/* <button type="submit" color="info" className="save">
-          Guardar Evolución
-        </button> */}
 
         <Button type="submit" color="info" className="save">
           Guardar Evolución

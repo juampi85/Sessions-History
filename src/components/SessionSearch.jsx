@@ -36,6 +36,9 @@ const SessionSearch = () => {
         setShowNotFoundMessage(false); //* Y acá programo que el mensaje desaparezca después de 2 segundos
       }, 2000);
     }
+
+    setSearchName('');
+    setSearchDate('');
   };
 
   return (
